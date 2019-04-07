@@ -1,0 +1,15 @@
+language: julia
+os:
+  - linux
+  - osx
+julia:
+  - 0.6
+  - nightly
+matrix:
+  allow_failures:
+  - julia: nightly  
+notifications:
+  email: false
+after_success:
+  - julia -e 'cd(Pkg.dir("HttpServer")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
+  - julia -e 'cd(Pkg.dir("HttpServer")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
